@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     const inbound = extractInbound(req.body);
     if (!inbound) return res.status(200).json({ ok: true, ignored: true });
 
-    const { phone, message, referral } = inbound;
+    const { phone, name, message, referral } = inbound;
     await saveMessage({
       phone,
       direction: 'inbound',
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
     session = result.session;
     await saveSession(session);
-    await upsertLeadFromSession(session, referral);
+    await upsertLeadFromSession(session, referral, name);
     const metaResponse = await sendBotReply(phone, result);
 
     await saveMessage({
@@ -73,7 +73,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, state: session.state, step: session.step });
   } catch (error) {
     console.error('whatsapp_webhook_error', error);
-    // Meta should receive 200 only when processing succeeded; 500 allows retry.
     return res.status(500).json({ error: 'webhook_processing_failed', message: error.message });
   }
 }
