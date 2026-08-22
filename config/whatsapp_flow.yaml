@@ -1,0 +1,103 @@
+version: '0.1'
+brand: LimpiaFast
+entry_message: "👋 ¡Hola! Soy el asistente de LimpiaFast. Te ayudo a cotizar rápido. ¿Qué quieres limpiar hoy?"
+
+states:
+  - NEW_CHAT
+  - QUALIFYING
+  - QUALIFIED_PENDING_QUOTE
+  - QUOTED
+  - FOLLOW_UP
+  - BOOKED
+  - SERVICE_DONE
+  - LOST
+  - REPEAT_DUE
+
+questions:
+  - id: service_type
+    prompt: "¿Qué quieres limpiar?"
+    type: options
+    required: true
+    options:
+      - "🛋️ Sofá / muebles"
+      - "🛏️ Colchón"
+      - "🧶 Alfombra"
+      - "🪑 Sillas"
+      - "✨ Varias cosas"
+
+  - id: service_detail
+    prompt: "Cuéntame el tamaño o cantidad aproximada."
+    type: conditional_options_or_text
+    required: true
+
+  - id: district
+    prompt: "¿En qué distrito está el servicio?"
+    type: text
+    required: true
+
+  - id: photo_received
+    prompt: "📸 ¿Puedes enviarme una foto? Con eso podremos cotizarte mejor."
+    type: media
+    required: false
+
+  - id: pain_point
+    prompt: "¿Qué te gustaría resolver principalmente?"
+    type: options
+    required: true
+    options:
+      - "Mancha visible"
+      - "Suciedad acumulada"
+      - "Olor"
+      - "Mantenimiento"
+      - "Mascota / niños"
+      - "Otro"
+
+  - id: urgency
+    prompt: "¿Para cuándo te gustaría hacerlo?"
+    type: options
+    required: true
+    options:
+      - "Hoy / mañana"
+      - "Esta semana"
+      - "Próxima semana"
+      - "Solo estoy cotizando"
+
+qualification:
+  required_fields:
+    - service_type
+    - service_detail
+    - district
+    - urgency
+  preferred_fields:
+    - photo_received
+    - pain_point
+
+handoff:
+  state: QUALIFIED_PENDING_QUOTE
+  message: "¡Listo! Ya tengo lo necesario 🙌. Una persona de LimpiaFast revisará tu caso y te confirmará precio y horarios disponibles. No tendrás que repetir la información."
+  target_human_sla_minutes: 5
+
+follow_up:
+  missing_photo: "Nos falta solo una foto para poder orientarte mejor con la cotización 😊. Puedes enviarla por aquí cuando la tengas."
+  quoted_no_booking: "Hola 👋 ¿Te gustaría que revisemos horarios disponibles para tu limpieza? Si quieres, te digo qué opciones tenemos."
+
+tracking_fields:
+  - lead_id
+  - timestamp
+  - phone_or_contact_id
+  - campaign_name
+  - adset_name
+  - ad_name
+  - service_type
+  - service_detail
+  - district
+  - pain_point
+  - urgency
+  - photo_received
+  - lead_status
+  - quoted_price
+  - booked
+  - booking_date
+  - revenue
+  - direct_cost
+  - lost_reason
