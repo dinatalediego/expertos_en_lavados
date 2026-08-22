@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b8ef3" />
+  <meta name="description" content="LimpiaFast Market Research: evidencia, entrevistas, propuesta de valor y disposición a pagar." />
+  <title>LimpiaFast · Market Research</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar shell">
+    <a class="brand" href="/" aria-label="Volver al Growth OS">
+      <span class="brand-mark">LF</span>
+      <span><strong>LimpiaFast</strong><small>Market Research</small></span>
+    </a>
+    <div class="top-actions">
+      <span id="research-mode" class="pill">cargando…</span>
+      <a class="ghost-link" href="/">← Growth OS</a>
+    </div>
+  </header>
+
+  <main class="shell research-page">
+    <section class="hero research-hero">
+      <div>
+        <p class="eyebrow">APRENDER ANTES DE ESCALAR</p>
+        <h1>Descubre qué hace que alguien diga<br><em>“sí, ven a limpiarlo”.</em></h1>
+        <p class="hero-copy">Separamos evidencia secundaria de entrevistas reales. El objetivo no es confirmar lo que creemos, sino encontrar qué resultado, confianza y precio explican la contratación.</p>
+      </div>
+      <div class="hero-status">
+        <div class="pulse-dot"></div>
+        <div><strong id="maturity">Cargando evidencia…</strong><span id="sample-note">Preparando muestra</span></div>
+      </div>
+    </section>
+
+    <section id="research-kpis" class="kpi-grid" aria-label="Indicadores de investigación"></section>
+
+    <section class="grid-main research-overview">
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">DECISIÓN DE INVESTIGACIÓN</p><h2>Qué hacer ahora</h2></div></div>
+        <div id="next-action" class="research-decision"></div>
+        <div class="research-rule">
+          <strong>Regla de evidencia</strong>
+          <p>Desk research genera hipótesis. Entrevistas revelan lenguaje y contexto. Solo el comportamiento real en cotización/reserva valida mensajes para pauta.</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">MUESTRA PRIMARIA</p><h2>Segmentos observados</h2></div></div>
+        <div id="segments" class="mini-bars"></div>
+      </article>
+    </section>
+
+    <section class="grid-main lower research-overview">
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">QUÉ VALORAN</p><h2>Atributos de elección</h2></div><span class="muted">promedio 1–5</span></div>
+        <div id="attributes" class="attribute-list"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">MENSAJES</p><h2>Conceptos ganadores</h2></div></div>
+        <div id="messages" class="concept-list"></div>
+      </article>
+    </section>
+
+    <section class="grid-main research-overview">
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">PRECIO</p><h2>Disposición a pagar</h2></div><span class="muted">medianas</span></div>
+        <div id="price-sensitivity" class="price-grid"></div>
+        <p class="research-footnote">Usamos cuatro preguntas tipo Van Westendorp para evitar preguntar simplemente “¿cuánto pagarías?”, que suele producir respuestas poco fiables.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">EVIDENCIA SECUNDARIA</p><h2>Qué sabemos antes de entrevistar</h2></div></div>
+        <div id="evidence-themes" class="evidence-themes"></div>
+      </article>
+    </section>
+
+    <section class="panel evidence-panel">
+      <div class="panel-head"><div><p class="eyebrow">FUENTES Y SEÑALES</p><h2>Hipótesis, no conclusiones</h2></div><span class="muted">mercado local + estudios de home services</span></div>
+      <div id="evidence" class="evidence-grid"></div>
+    </section>
+
+    <section class="research-form-section">
+      <div class="research-form-copy">
+        <p class="eyebrow">CUESTIONARIO · 8–12 MIN</p>
+        <h2>Registrar una entrevista sin contaminar la respuesta.</h2>
+        <p>Primero reconstruye el episodio real; después pregunta factores, precio y mensajes. No leas opciones de marketing al inicio: sesgarían el relato.</p>
+        <ol class="research-questions">
+          <li>¿Qué pasó para que pensaras en contratar una limpieza?</li>
+          <li>¿Qué querías conseguir realmente al terminar?</li>
+          <li>¿Qué otras opciones consideraste, incluso no hacer nada?</li>
+          <li>¿Qué era lo que más te preocupaba antes de contratar?</li>
+          <li>¿Qué te hizo confiar o desconfiar de un proveedor?</li>
+          <li>¿Qué fue lo más importante para elegir?</li>
+          <li>Valora 8 atributos de 1 a 5 y ordénalos.</li>
+          <li>Precio real/esperado, si aplica.</li>
+          <li>¿A qué precio sería sospechosamente barato?</li>
+          <li>¿A qué precio sería buena relación valor/precio?</li>
+          <li>¿A qué precio empezaría a parecer caro? ¿Y demasiado caro?</li>
+          <li>Al final: elige entre Rescate, Higiene, Renovación y Conveniencia, y explica por qué.</li>
+        </ol>
+      </div>
+
+      <form id="research-form" class="research-form">
+        <div class="form-head">
+          <div><strong>Nueva entrevista</strong><span>No guardamos nombre, teléfono ni email.</span></div>
+          <span id="form-status" class="muted"></span>
+        </div>
+
+        <label>Código anónimo<input name="respondent_code" required placeholder="MR-001" /></label>
+        <div class="form-row">
+          <label>Origen<select name="source"><option value="past_client">Cliente anterior</option><option value="lost_lead">Lead no convertido</option><option value="prospect">Prospecto</option><option value="friend_family">Amigo/familiar</option><option value="other">Otro</option></select></label>
+          <label>Etapa<select name="customer_stage"><option value="used_service">Usó el servicio</option><option value="considered_not_bought">Consideró, no compró</option><option value="prospect">Prospecto</option></select></label>
+        </div>
+        <div class="form-row"><label>Distrito<input name="district" /></label><label>Servicio<input name="service_type" placeholder="Sofá, colchón…" /></label></div>
+        <label>1. Disparador<textarea name="trigger" placeholder="¿Qué había pasado justo antes de buscar el servicio?"></textarea></label>
+        <label>2. Resultado deseado<textarea name="job_to_be_done" placeholder="¿Qué quería conseguir realmente?"></textarea></label>
+        <label>3. Alternativas<input name="alternatives" placeholder="Limpiar en casa, comprar otro, otro proveedor…" /></label>
+        <label>4. Mayor preocupación<textarea name="biggest_fear"></textarea></label>
+        <label>5. Señal de confianza<textarea name="trust_signal"></textarea></label>
+        <label>6. Factor principal<input name="top_factor" placeholder="Resultado, precio, confianza, rapidez…" /></label>
+
+        <fieldset>
+          <legend>7. Importancia de atributos · 1 nada importante → 5 decisivo</legend>
+          <div id="attribute-inputs" class="attribute-inputs"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>8–11. Precio · soles</legend>
+          <div class="form-row"><label>Precio pagado<input name="price_paid" type="number" min="0" step="1" /></label><label>Precio esperado<input name="expected_price" type="number" min="0" step="1" /></label></div>
+          <div class="form-row"><label>Demasiado barato<input name="ps_too_cheap" type="number" min="0" step="1" /></label><label>Buena compra<input name="ps_good_value" type="number" min="0" step="1" /></label></div>
+          <div class="form-row"><label>Caro pero posible<input name="ps_expensive" type="number" min="0" step="1" /></label><label>Demasiado caro<input name="ps_too_expensive" type="number" min="0" step="1" /></label></div>
+        </fieldset>
+
+        <div class="form-row">
+          <label>Segmento codificado<select name="coded_segment"><option value="">Sin codificar</option><option value="rescue">Rescate</option><option value="hygiene">Higiene</option><option value="renewal">Renovación</option><option value="convenience">Conveniencia</option><option value="other">Otro</option></select></label>
+          <label>Concepto elegido<select name="winning_concept"><option value="">Sin test</option><option value="rescue">Rescate</option><option value="hygiene">Higiene</option><option value="renewal">Renovación</option><option value="convenience">Conveniencia</option></select></label>
+        </div>
+        <label>12. ¿Por qué eligió ese concepto?<textarea name="message_reason"></textarea></label>
+        <label>Notas finales<textarea name="open_feedback"></textarea></label>
+        <label class="admin-secret">Clave admin de esta sesión<input name="admin_secret" type="password" autocomplete="off" placeholder="ADMIN_API_SECRET" /></label>
+        <button class="research-submit" type="submit">Guardar entrevista</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="shell footer"><span>LimpiaFast Growth OS · Market Research v0.3</span><span>Evidencia → hipótesis → entrevista → experimento → reserva</span></footer>
+  <script type="module" src="/market-research.js"></script>
+</body>
+</html>
