@@ -1,6 +1,7 @@
-version: '0.1'
+version: '0.2'
 brand: LimpiaFast
-entry_message: "👋 ¡Hola! Soy el asistente de LimpiaFast. Te ayudo a cotizar rápido. ¿Qué quieres limpiar hoy?"
+purpose: "calificar sin fricción y entregar contexto completo a la persona que cotiza"
+entry_message: "👋 ¡Hola! Soy el asistente de LimpiaFast. Te ayudo a cotizar rápido y sin llamadas innecesarias."
 
 states:
   - NEW_CHAT
@@ -26,8 +27,8 @@ questions:
       - "✨ Varias cosas"
 
   - id: service_detail
-    prompt: "Cuéntame el tamaño o cantidad aproximada."
-    type: conditional_options_or_text
+    prompt: "Perfecto. Cuéntame el tamaño o cantidad aproximada. Ej.: sofá de 3 cuerpos, 6 sillas o colchón queen."
+    type: text
     required: true
 
   - id: district
@@ -36,14 +37,14 @@ questions:
     required: true
 
   - id: photo_received
-    prompt: "📸 ¿Puedes enviarme una foto? Con eso podremos cotizarte mejor."
-    type: media
+    prompt: "📸 Envíame una foto si puedes. Nos ayuda a darte una cotización mucho más precisa."
+    type: media_optional
     required: false
 
   - id: pain_point
     prompt: "¿Qué te gustaría resolver principalmente?"
     type: options
-    required: true
+    required: false
     options:
       - "Mancha visible"
       - "Suciedad acumulada"
@@ -77,9 +78,13 @@ handoff:
   message: "¡Listo! Ya tengo lo necesario 🙌. Una persona de LimpiaFast revisará tu caso y te confirmará precio y horarios disponibles. No tendrás que repetir la información."
   target_human_sla_minutes: 5
 
-follow_up:
-  missing_photo: "Nos falta solo una foto para poder orientarte mejor con la cotización 😊. Puedes enviarla por aquí cuando la tengas."
-  quoted_no_booking: "Hola 👋 ¿Te gustaría que revisemos horarios disponibles para tu limpieza? Si quieres, te digo qué opciones tenemos."
+attribution:
+  capture_from_click_to_whatsapp_referral:
+    - source_id
+    - source_url
+    - headline
+    - body
+    - ctwa_clid
 
 tracking_fields:
   - lead_id
@@ -88,6 +93,8 @@ tracking_fields:
   - campaign_name
   - adset_name
   - ad_name
+  - source_ad_id
+  - ctwa_clid
   - service_type
   - service_detail
   - district
@@ -101,3 +108,9 @@ tracking_fields:
   - revenue
   - direct_cost
   - lost_reason
+
+implementation:
+  executable_mirror: "src/lib/flow.js"
+  webhook: "api/whatsapp.js"
+  persistence: "src/lib/storage.js"
+  dashboard: "api/dashboard.js"
