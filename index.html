@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b8ef3" />
+  <meta name="description" content="LimpiaFast Growth OS: anuncios, leads, reservas, CAC y decisiones de pauta." />
+  <title>LimpiaFast · Growth OS</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar shell">
+    <a class="brand" href="/" aria-label="LimpiaFast Growth OS">
+      <span class="brand-mark">LF</span>
+      <span><strong>LimpiaFast</strong><small>Growth OS</small></span>
+    </a>
+    <div class="top-actions">
+      <span id="mode-pill" class="pill">cargando…</span>
+      <a class="wa-link" href="https://wa.me/51993984874?text=Hola%20LimpiaFast%2C%20quiero%20cotizar%20una%20limpieza" target="_blank" rel="noreferrer">Abrir WhatsApp ↗</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">CENTRO DE DECISIÓN · PAUTA → CHAT → RESERVA</p>
+        <h1>Decide dónde poner<br><em>el próximo sol</em> de pauta.</h1>
+        <p class="hero-copy">No optimizamos chats baratos. Conectamos anuncios, conversaciones y reservas para saber qué creatividad financiar mañana y cuál apagar.</p>
+      </div>
+      <div class="hero-status">
+        <div class="pulse-dot"></div>
+        <div><strong>Sistema operativo comercial</strong><span id="system-status">Consultando integraciones…</span></div>
+      </div>
+    </section>
+
+    <section id="kpis" class="kpi-grid" aria-label="Indicadores principales"></section>
+
+    <section class="grid-main">
+      <article class="panel decision-panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">MOTOR DE DECISIÓN</p><h2>Qué hacer mañana</h2></div>
+          <button id="refresh" class="ghost-button">Actualizar</button>
+        </div>
+        <div id="decisions" class="decision-list"></div>
+      </article>
+
+      <article class="panel funnel-panel">
+        <div class="panel-head"><div><p class="eyebrow">ECONOMÍA DEL FUNNEL</p><h2>De atención a dinero</h2></div></div>
+        <div id="funnel" class="funnel"></div>
+        <div class="quote-card">
+          <span>North Star</span>
+          <strong>CAC por servicio reservado</strong>
+          <p>Si baja sin deteriorar margen, el sistema está aprendiendo bien.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid-main lower">
+      <article class="panel">
+        <div class="panel-head"><div><p class="eyebrow">LEADS RECIENTES</p><h2>Quién necesita atención</h2></div><span class="muted">últimos movimientos</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Lead</th><th>Necesidad</th><th>Distrito</th><th>Estado</th><th>Origen</th><th>Cotización</th></tr></thead>
+            <tbody id="leads"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="panel activity-panel">
+        <div class="panel-head"><div><p class="eyebrow">ACTIVIDAD</p><h2>Ahora mismo</h2></div></div>
+        <div id="events" class="event-list"></div>
+      </article>
+    </section>
+
+    <section class="chat-section">
+      <div class="chat-copy">
+        <p class="eyebrow">EXPERIENCIA DEL LEAD</p>
+        <h2>La cotización empieza sin esperar.</h2>
+        <p>Este simulador reproduce la lógica del bot: una conversación corta, guiada y con handoff humano. El webhook real usa el mismo flujo para WhatsApp Cloud API.</p>
+        <ul class="checks">
+          <li>Pregunta una cosa a la vez.</li>
+          <li>Pide foto para cotizar mejor.</li>
+          <li>Conserva contexto del anuncio.</li>
+          <li>Entrega el lead calificado sin hacerlo repetir todo.</li>
+        </ul>
+      </div>
+      <div class="phone">
+        <div class="phone-top"><span class="avatar">LF</span><div><strong>LimpiaFast</strong><small>responde al instante</small></div><span class="online">●</span></div>
+        <div id="chat" class="chat"></div>
+        <div id="quick-replies" class="quick-replies"></div>
+        <form id="chat-form" class="chat-form"><input id="chat-input" autocomplete="off" placeholder="Escribe tu respuesta…" /><button>Enviar</button></form>
+        <button id="restart-chat" class="restart">Reiniciar demo</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer"><span>LimpiaFast Growth OS · v0.2</span><span>Meta Ads → WhatsApp → Reserva → Aprendizaje</span></footer>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
