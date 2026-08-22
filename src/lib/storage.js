@@ -1,15 +1,24 @@
 import { demoAds, demoEvents, demoLeads } from './demo-data.js';
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export const storageMode = supabaseUrl && supabaseKey ? 'supabase' : 'demo';
 
 function headers(extra = {}) {
-  return {
+  const authHeaders = {
     apikey: supabaseKey,
-    Authorization: `Bearer ${supabaseKey}`,
     'Content-Type': 'application/json',
+  };
+
+  // Legacy service_role keys are JWTs and can be sent as Bearer tokens.
+  // Modern sb_secret_ keys should be sent only as the apikey header.
+  if (supabaseKey && !supabaseKey.startsWith('sb_secret_')) {
+    authHeaders.Authorization = `Bearer ${supabaseKey}`;
+  }
+
+  return {
+    ...authHeaders,
     ...extra,
   };
 }
