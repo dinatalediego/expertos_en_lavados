@@ -78,4 +78,11 @@ create table if not exists lead_events (
   created_at timestamptz not null default now()
 );
 
--- Keep service-role access server-side only. Do not expose SUPABASE_SERVICE_ROLE_KEY in frontend code.
+-- Public PostgREST access is disabled by default. The app writes through the
+-- server-side Supabase service role, which bypasses RLS. Never expose the
+-- service-role key in browser code.
+alter table public.leads enable row level security;
+alter table public.bot_sessions enable row level security;
+alter table public.messages enable row level security;
+alter table public.ad_daily_metrics enable row level security;
+alter table public.lead_events enable row level security;
