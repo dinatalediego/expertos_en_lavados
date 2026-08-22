@@ -65,14 +65,13 @@ export async function getSession(phone) {
 
 export async function saveSession(session) {
   if (storageMode !== 'supabase') return session;
-  const row = {
+  await upsertRows('bot_sessions', {
     phone: session.phone,
     state: session.state,
     step: session.step,
     answers: session.answers,
     updated_at: session.updated_at,
-  };
-  await upsertRows('bot_sessions', row, 'phone');
+  }, 'phone');
   return session;
 }
 
@@ -88,11 +87,12 @@ export async function saveMessage({ phone, direction, message_type, body, meta_m
   });
 }
 
-export async function upsertLeadFromSession(session, referral = {}) {
+export async function upsertLeadFromSession(session, referral = {}, contactName = null) {
   if (storageMode !== 'supabase') return null;
   const answers = session.answers || {};
-  const lead = {
+  return upsertRows('leads', {
     phone: session.phone,
+    name: contactName,
     service_type: answers.service_type || null,
     service_detail: answers.service_detail || null,
     district: answers.district || null,
@@ -104,8 +104,11 @@ export async function upsertLeadFromSession(session, referral = {}) {
     ctwa_clid: referral.ctwa_clid || null,
     referral,
     updated_at: new Date().toISOString(),
-  };
-  return upsertRows('leads', lead, 'phone');
+  }, 'phone');
+}
+
+function isQualified(status) {
+  return ['QUALIFIED_PENDING_QUOTE', 'QUOTED', 'FOLLOW_UP', 'BOOKED', 'SERVICE_DONE', 'REPEAT_DUE'].includes(status);
 }
 
 export async function dashboardRows() {
@@ -114,8 +117,8 @@ export async function dashboardRows() {
   }
 
   const [adRows, leads] = await Promise.all([
-    listRows('ad_daily_metrics', 'select=*&order=metric_date.desc&limit=250'),
-    listRows('leads', 'select=*&order=created_at.desc&limit=50'),
+    listRows('ad_daily_metrics', 'select=*&order=metric_date.desc&limit=500'),
+    listRows('leads', 'select=*&order=created_at.desc&limit=250'),
   ]);
 
   const aggregate = new Map();
@@ -137,15 +140,40 @@ export async function dashboardRows() {
       });
     }
     const ad = aggregate.get(id);
-    for (const key of ['spend', 'impressions', 'clicks', 'conversations', 'qualified', 'bookings', 'revenue']) {
+    for (const key of ['spend', 'impressions', 'clicks', 'conversations']) {
       ad[key] += Number(row[key] || 0);
     }
+    if (row.daily_budget) ad.daily_budget = Number(row.daily_budget);
+  }
+
+  // Conversion truth comes from first-party leads, not from ad-platform attribution alone.
+  for (const lead of leads || []) {
+    if (!lead.source_ad_id) continue;
+    if (!aggregate.has(lead.source_ad_id)) {
+      aggregate.set(lead.source_ad_id, {
+        id: lead.source_ad_id,
+        name: lead.referral?.headline || lead.source_ad_id,
+        campaign_name: 'Click-to-WhatsApp',
+        spend: 0,
+        impressions: 0,
+        clicks: 0,
+        conversations: 0,
+        qualified: 0,
+        bookings: 0,
+        revenue: 0,
+        daily_budget: 0,
+      });
+    }
+    const ad = aggregate.get(lead.source_ad_id);
+    if (isQualified(lead.status)) ad.qualified += 1;
+    if (lead.booked || ['BOOKED', 'SERVICE_DONE', 'REPEAT_DUE'].includes(lead.status)) ad.bookings += 1;
+    ad.revenue += Number(lead.revenue || (lead.booked ? lead.quoted_price : 0) || 0);
   }
 
   const events = (leads || []).slice(0, 8).map((lead) => ({
     at: new Date(lead.updated_at || lead.created_at).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }),
     label: lead.status || 'Lead',
-    detail: [lead.service_type, lead.district].filter(Boolean).join(' · '),
+    detail: [lead.name, lead.service_type, lead.district].filter(Boolean).join(' · '),
   }));
 
   return { ads: [...aggregate.values()], leads, events, mode: 'supabase' };
